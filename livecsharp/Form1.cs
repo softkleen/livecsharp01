@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using livecsharp.Classes;
 
 namespace livecsharp
 {
@@ -15,6 +16,11 @@ namespace livecsharp
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void btnInserir_Click(object sender, EventArgs e)
+        {
+            Aluno aluno = new Aluno();
         }
     }
 }
