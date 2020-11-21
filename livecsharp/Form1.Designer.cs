@@ -46,6 +46,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txtConfirmaSenha = new System.Windows.Forms.TextBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.lstLista = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -76,6 +77,7 @@
             this.btnListar.TabIndex = 2;
             this.btnListar.Text = "Listar";
             this.btnListar.UseVisualStyleBackColor = true;
+            this.btnListar.Click += new System.EventHandler(this.btnListar_Click);
             // 
             // label1
             // 
@@ -147,6 +149,7 @@
             // 
             this.txtId.Location = new System.Drawing.Point(86, 55);
             this.txtId.Name = "txtId";
+            this.txtId.ReadOnly = true;
             this.txtId.Size = new System.Drawing.Size(46, 20);
             this.txtId.TabIndex = 4;
             // 
@@ -161,6 +164,7 @@
             // chkAtivo
             // 
             this.chkAtivo.AutoSize = true;
+            this.chkAtivo.Enabled = false;
             this.chkAtivo.Location = new System.Drawing.Point(295, 54);
             this.chkAtivo.Name = "chkAtivo";
             this.chkAtivo.Size = new System.Drawing.Size(50, 17);
@@ -203,11 +207,20 @@
             this.checkBox2.Text = "Visualizar";
             this.checkBox2.UseVisualStyleBackColor = true;
             // 
+            // lstLista
+            // 
+            this.lstLista.FormattingEnabled = true;
+            this.lstLista.Location = new System.Drawing.Point(359, 222);
+            this.lstLista.Name = "lstLista";
+            this.lstLista.Size = new System.Drawing.Size(300, 95);
+            this.lstLista.TabIndex = 9;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lstLista);
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.chkAtivo);
@@ -254,6 +267,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtConfirmaSenha;
         private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.ListBox lstLista;
     }
 }
 
