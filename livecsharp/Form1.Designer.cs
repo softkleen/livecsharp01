@@ -42,12 +42,19 @@
             this.txtId = new System.Windows.Forms.TextBox();
             this.txtSenha = new System.Windows.Forms.TextBox();
             this.chkAtivo = new System.Windows.Forms.CheckBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvLista = new System.Windows.Forms.DataGridView();
             this.label6 = new System.Windows.Forms.Label();
             this.txtConfirmaSenha = new System.Windows.Forms.TextBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.lstLista = new System.Windows.Forms.ListBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.clnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clnNome = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clnEmail = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clnTelefone = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clnAtivo = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.button1 = new System.Windows.Forms.Button();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvLista)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnInserir
@@ -172,13 +179,27 @@
             this.chkAtivo.Text = "Ativo";
             this.chkAtivo.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
+            // dgvLista
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(386, 34);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(298, 150);
-            this.dataGridView1.TabIndex = 7;
+            this.dgvLista.AllowUserToAddRows = false;
+            this.dgvLista.AllowUserToDeleteRows = false;
+            this.dgvLista.AllowUserToResizeColumns = false;
+            this.dgvLista.AllowUserToResizeRows = false;
+            this.dgvLista.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvLista.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.clnId,
+            this.clnNome,
+            this.clnEmail,
+            this.clnTelefone,
+            this.clnAtivo});
+            this.dgvLista.Location = new System.Drawing.Point(60, 314);
+            this.dgvLista.Name = "dgvLista";
+            this.dgvLista.ReadOnly = true;
+            this.dgvLista.RowHeadersVisible = false;
+            this.dgvLista.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dgvLista.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvLista.Size = new System.Drawing.Size(565, 150);
+            this.dgvLista.TabIndex = 7;
             // 
             // label6
             // 
@@ -207,22 +228,82 @@
             this.checkBox2.Text = "Visualizar";
             this.checkBox2.UseVisualStyleBackColor = true;
             // 
-            // lstLista
+            // clnId
             // 
-            this.lstLista.FormattingEnabled = true;
-            this.lstLista.Location = new System.Drawing.Point(359, 222);
-            this.lstLista.Name = "lstLista";
-            this.lstLista.Size = new System.Drawing.Size(300, 95);
-            this.lstLista.TabIndex = 9;
+            this.clnId.Frozen = true;
+            this.clnId.HeaderText = "ID";
+            this.clnId.Name = "clnId";
+            this.clnId.ReadOnly = true;
+            this.clnId.Width = 40;
+            // 
+            // clnNome
+            // 
+            this.clnNome.Frozen = true;
+            this.clnNome.HeaderText = "Nome";
+            this.clnNome.Name = "clnNome";
+            this.clnNome.ReadOnly = true;
+            this.clnNome.Width = 185;
+            // 
+            // clnEmail
+            // 
+            this.clnEmail.Frozen = true;
+            this.clnEmail.HeaderText = "Email";
+            this.clnEmail.Name = "clnEmail";
+            this.clnEmail.ReadOnly = true;
+            this.clnEmail.Width = 185;
+            // 
+            // clnTelefone
+            // 
+            this.clnTelefone.Frozen = true;
+            this.clnTelefone.HeaderText = "Telefone";
+            this.clnTelefone.Name = "clnTelefone";
+            this.clnTelefone.ReadOnly = true;
+            // 
+            // clnAtivo
+            // 
+            this.clnAtivo.Frozen = true;
+            this.clnAtivo.HeaderText = "Ativo";
+            this.clnAtivo.Name = "clnAtivo";
+            this.clnAtivo.ReadOnly = true;
+            this.clnAtivo.Width = 40;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(63, 477);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(68, 23);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "Buscar";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(138, 477);
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(71, 20);
+            this.numericUpDown1.TabIndex = 10;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Enter += new System.EventHandler(this.numericUpDown1_Enter);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.lstLista);
+            this.ClientSize = new System.Drawing.Size(800, 528);
+            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgvLista);
             this.Controls.Add(this.chkAtivo);
             this.Controls.Add(this.txtConfirmaSenha);
             this.Controls.Add(this.txtSenha);
@@ -241,7 +322,8 @@
             this.Controls.Add(this.btnInserir);
             this.Name = "Form1";
             this.Text = "Cadastro Aluno";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvLista)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -263,11 +345,17 @@
         private System.Windows.Forms.TextBox txtId;
         private System.Windows.Forms.TextBox txtSenha;
         private System.Windows.Forms.CheckBox chkAtivo;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvLista;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtConfirmaSenha;
         private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.ListBox lstLista;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clnId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clnNome;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clnEmail;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clnTelefone;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn clnAtivo;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
     }
 }
 

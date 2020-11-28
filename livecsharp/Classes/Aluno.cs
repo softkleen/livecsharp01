@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace livecsharp.Classes
 {
-    public class Aluno
+    public class Aluno 
     {
         // método construtor
         public Aluno(int id=0, string nome=null, string email=null, string telefone=null, string senha=null, bool ativo=false)
@@ -38,12 +38,15 @@ namespace livecsharp.Classes
             Id = Convert.ToInt32(cmd.ExecuteScalar()); //cast - parse - Convert
 
         }
-        public List<Aluno> ListarAlunos()
+        public List<Aluno> ListarAlunos(int inicio=0, int limite=0)
         {
             List<Aluno> lista = new List<Aluno>();
             var cmd = Banco.Abrir();
             cmd.CommandType = System.Data.CommandType.Text;
-            cmd.CommandText = "select * from alunos";
+            if (limite>0)
+                cmd.CommandText = "select * from alunos limit "+ inicio +","+ limite;
+            else
+                cmd.CommandText = "select * from alunos";
             var dr = cmd.ExecuteReader();
             while (dr.Read())
             {
@@ -57,6 +60,39 @@ namespace livecsharp.Classes
                     ));
             }
             return lista;
+        }
+        public void ConsutarPorId(int id)
+        {
+            var cmd = Banco.Abrir();
+            cmd.CommandType = System.Data.CommandType.Text;
+            cmd.CommandText = "select * from alunos where id = "+id;
+            var dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                Id = dr.GetInt32(0);
+                Nome = dr.GetString(1);
+                Email = dr.GetString(2);
+                Telefone = dr.GetString(3);
+                Senha = dr.GetString(4);
+                Ativo = dr.GetBoolean(5);
+            }
+        }
+        public static int ObterQuantidadeRegistros()
+        {
+            var cmd = Banco.Abrir();
+            cmd.CommandText = "select count(*) from alunos";
+            return Convert.ToInt32(cmd.ExecuteScalar());
+        }
+        public void Alterar(Aluno aluno)
+        {
+            string ativo = (aluno.Ativo) ? "1" : "0";
+            var cmd = Banco.Abrir();
+            cmd.CommandType = System.Data.CommandType.Text;
+            cmd.CommandText = "update aluno set nome='"+
+                aluno.Nome +"', telefone='"+
+                aluno.Telefone+"', senha= md5('"+aluno.Senha+"'), ativo='"+
+                ativo+"' where id = "+aluno.Id;
+            cmd.ExecuteNonQuery();
         }
     }
    
