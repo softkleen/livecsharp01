@@ -88,11 +88,22 @@ namespace livecsharp.Classes
             string ativo = (aluno.Ativo) ? "1" : "0";
             var cmd = Banco.Abrir();
             cmd.CommandType = System.Data.CommandType.Text;
-            cmd.CommandText = "update aluno set nome='"+
+            cmd.CommandText = "update alunos set nome='"+
                 aluno.Nome +"', telefone='"+
-                aluno.Telefone+"', senha= md5('"+aluno.Senha+"'), ativo='"+
-                ativo+"' where id = "+aluno.Id;
+                aluno.Telefone+"', ativo="+
+                ativo+" where id = "+aluno.Id;
             cmd.ExecuteNonQuery();
+        }
+        public void Excluir(int id) 
+        { 
+            var cmd = Banco.Abrir();
+            // Alterar ativo = false
+            //cmd.CommandText = "update alunos set ativo=0 where id=" + id;
+            //cmd.ExecuteNonQuery();
+            // excluir da tabela
+           cmd.CommandText = "delete from alunos where id=" + id;
+           cmd.ExecuteNonQuery();
+           
         }
     }
    

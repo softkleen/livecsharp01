@@ -37,7 +37,10 @@ namespace livecsharp
         {
             txtNome.Clear();txtEmail.Clear();txtTelefone.Clear();
             txtSenha.Clear(); txtConfirmaSenha.Clear();
-            chkAtivo.Checked = false; txtId.Clear();
+            chkAtivo.Checked = false; txtId.Clear();txtId.ReadOnly = true;
+            btnInserir.Enabled = true;
+            btnHabilitaBusca.Text = "...";
+            btnAlterar.Enabled = false;
         }
 
         private void btnListar_Click(object sender, EventArgs e)
@@ -74,6 +77,66 @@ namespace livecsharp
                 dgvLista.Rows[lista.IndexOf(a)].Cells[clnTelefone.Index].Value = a.Telefone;
                 dgvLista.Rows[lista.IndexOf(a)].Cells[clnAtivo.Index].Value = a.Ativo;
             });
+        }
+
+        private void btnHabilitaBusca_Click(object sender, EventArgs e)
+        {
+            if (btnHabilitaBusca.Text == "...")
+            {
+                txtId.ReadOnly = false;
+                txtId.Focus();
+                btnInserir.Enabled = false;
+                btnAlterar.Enabled = true;
+                btnHabilitaBusca.Text = "Buscar";
+                chkAtivo.Enabled = true;
+            }
+            else if (btnHabilitaBusca.Text == "Buscar")
+            { 
+                if (txtId.Text != string.Empty)
+                {
+                    Aluno aluno = new Aluno();
+                    aluno.ConsutarPorId(int.Parse(txtId.Text));
+                    txtNome.Text = aluno.Nome;
+                    txtEmail.Text = aluno.Email;
+                    //txtEmail.ReadOnly = true;
+                    txtTelefone.Text = aluno.Telefone;
+                    //txtSenha.Text = aluno.Senha;
+                    chkAtivo.Checked = aluno.Ativo;
+                }
+            }
+
+           
+
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox2.Checked)
+                txtSenha.UseSystemPasswordChar = false;
+            else
+                txtSenha.UseSystemPasswordChar = true;
+        }
+
+        private void btnAlterar_Click(object sender, EventArgs e)
+        {
+            Aluno aluno = new Aluno();
+            aluno.Id = int.Parse(txtId.Text);
+            aluno.Nome = txtNome.Text;
+            aluno.Telefone = txtTelefone.Text;
+            aluno.Ativo = chkAtivo.Checked;
+            aluno.Alterar(aluno);
+
+            MessageBox.Show("Aluno alterado com sucesso!");
+            LimparCampos();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Aluno a = new Aluno();
+            a.Excluir(int.Parse(txtId.Text));
+            MessageBox.Show("Aluno excluído com sucesso!");
+            LimparCampos();
+
         }
     }
 }
