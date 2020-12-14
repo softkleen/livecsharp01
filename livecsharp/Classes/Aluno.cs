@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
 
 namespace livecsharp.Classes
 {
@@ -31,11 +32,16 @@ namespace livecsharp.Classes
         public void Inserir() 
         {
             var cmd = Banco.Abrir();
-            cmd.CommandType = System.Data.CommandType.Text;
-            cmd.CommandText = "insert alunos values(null, '"+Nome+"','"+Email+"','"+Telefone+"',md5('"+Senha+"'),1)";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "insere_aluno";
+            cmd.Parameters.AddWithValue("_id", 0).Direction = ParameterDirection.Output;
+            cmd.Parameters.AddWithValue("_nome", Nome).Direction = ParameterDirection.Input;
+            cmd.Parameters.AddWithValue("_email", Email).Direction = ParameterDirection.Input;
+            cmd.Parameters.AddWithValue("_telefone", Telefone).Direction = ParameterDirection.Input;
+            cmd.Parameters.AddWithValue("_senha", Senha).Direction = ParameterDirection.Input;
             cmd.ExecuteNonQuery();
-            cmd.CommandText = "select @@identity";
-            Id = Convert.ToInt32(cmd.ExecuteScalar()); //cast - parse - Convert
+            Id = Convert.ToInt32(cmd.Parameters["_id"].Value);
+            cmd.Parameters.Clear();
 
         }
         public List<Aluno> ListarAlunos(int inicio=0, int limite=0)
@@ -85,24 +91,33 @@ namespace livecsharp.Classes
         }
         public void Alterar(Aluno aluno)
         {
-            string ativo = (aluno.Ativo) ? "1" : "0";
-            var cmd = Banco.Abrir();
-            cmd.CommandType = System.Data.CommandType.Text;
-            cmd.CommandText = "update alunos set nome='"+
-                aluno.Nome +"', telefone='"+
-                aluno.Telefone+"', ativo="+
-                ativo+" where id = "+aluno.Id;
-            cmd.ExecuteNonQuery();
+            try
+            {
+                var cmd = Banco.Abrir();
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandText = "altera_aluno";
+                cmd.Parameters.AddWithValue("_id", Id).Direction = ParameterDirection.Input;
+                cmd.Parameters.AddWithValue("_nome", Nome).Direction = ParameterDirection.Input;
+                cmd.Parameters.AddWithValue("_telefone", Telefone).Direction = ParameterDirection.Input;
+                cmd.Parameters.AddWithValue("_senha", Senha).Direction = ParameterDirection.Input;
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+           
         }
-        public void Excluir(int id) 
-        { 
+        public void Excluir(int id, bool ativo) 
+        {
+            string atv = ativo ? "1" : "0";
             var cmd = Banco.Abrir();
             // Alterar ativo = false
-            //cmd.CommandText = "update alunos set ativo=0 where id=" + id;
-            //cmd.ExecuteNonQuery();
+            cmd.CommandText = "update alunos set ativo="+atv+" where id=" + id;
+            cmd.ExecuteNonQuery();
             // excluir da tabela
-           cmd.CommandText = "delete from alunos where id=" + id;
-           cmd.ExecuteNonQuery();
+           //cmd.CommandText = "delete from alunos where id=" + id;
+           //cmd.ExecuteNonQuery();
            
         }
     }

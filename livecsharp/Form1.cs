@@ -133,10 +133,32 @@ namespace livecsharp
         private void button2_Click(object sender, EventArgs e)
         {
             Aluno a = new Aluno();
-            a.Excluir(int.Parse(txtId.Text));
+            a.Excluir(int.Parse(txtId.Text), false);
             MessageBox.Show("Aluno excluído com sucesso!");
             LimparCampos();
 
+        }
+
+        private void dgvLista_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex==dgvLista.Columns.IndexOf(clnAtivo))
+            {
+                dgvLista.EndEdit();
+                Aluno aluno = new Aluno();
+                bool situacao = Convert.ToBoolean(dgvLista.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
+                if (situacao)
+                {
+                    dgvLista.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = false;
+                    string id = dgvLista.Rows[e.RowIndex].Cells[clnId.Index].Value.ToString();
+                    aluno.Excluir(int.Parse(id), true);
+                }
+                else
+                {
+                    dgvLista.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = true;
+                    string id = dgvLista.Rows[e.RowIndex].Cells[clnId.Index].Value.ToString();
+                    aluno.Excluir(int.Parse(id), false);
+                }
+            }
         }
     }
 }
