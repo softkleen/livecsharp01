@@ -143,20 +143,24 @@ namespace livecsharp
         {
             if (e.ColumnIndex==dgvLista.Columns.IndexOf(clnAtivo))
             {
-                dgvLista.EndEdit();
+                
                 Aluno aluno = new Aluno();
                 bool situacao = Convert.ToBoolean(dgvLista.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
                 if (situacao)
                 {
                     dgvLista.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = false;
                     string id = dgvLista.Rows[e.RowIndex].Cells[clnId.Index].Value.ToString();
-                    aluno.Excluir(int.Parse(id), true);
+                    aluno.Excluir(int.Parse(id), false);
                 }
                 else
                 {
                     dgvLista.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = true;
                     string id = dgvLista.Rows[e.RowIndex].Cells[clnId.Index].Value.ToString();
-                    aluno.Excluir(int.Parse(id), false);
+                    aluno.Excluir(int.Parse(id), true);
+                }
+              if(dgvLista.EndEdit())
+                {
+                    MessageBox.Show("Concluído");
                 }
             }
         }

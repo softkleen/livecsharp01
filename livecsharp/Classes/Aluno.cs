@@ -32,15 +32,16 @@ namespace livecsharp.Classes
         public void Inserir() 
         {
             var cmd = Banco.Abrir();
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "insere_aluno";
-            cmd.Parameters.AddWithValue("_id", 0).Direction = ParameterDirection.Output;
-            cmd.Parameters.AddWithValue("_nome", Nome).Direction = ParameterDirection.Input;
-            cmd.Parameters.AddWithValue("_email", Email).Direction = ParameterDirection.Input;
-            cmd.Parameters.AddWithValue("_telefone", Telefone).Direction = ParameterDirection.Input;
-            cmd.Parameters.AddWithValue("_senha", Senha).Direction = ParameterDirection.Input;
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "insert agendaVisita values(@id, @nome, @email, @telefone, @senha, 1)";
+            cmd.Parameters.AddWithValue("@id", 0);
+            cmd.Parameters.AddWithValue("@nome", Nome);
+            cmd.Parameters.AddWithValue("@email", Email);
+            cmd.Parameters.AddWithValue("@telefone", Telefone);
+            cmd.Parameters.AddWithValue("@senha", Senha);
             cmd.ExecuteNonQuery();
-            Id = Convert.ToInt32(cmd.Parameters["_id"].Value);
+            cmd.CommandText = "select @@identity";
+            Id = Convert.ToInt32(cmd.ExecuteScalar());
             cmd.Parameters.Clear();
 
         }
